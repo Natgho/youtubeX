@@ -11,8 +11,8 @@ def primitive_on_progress(stream, chunk, file_handle, bytes_remaining):
     print(percentage_of_completion)
 
 
-def download_from_link(link, saving_path):
-    yt = YouTube(link, on_progress_callback=primitive_on_progress)
+def download_from_link(link, saving_path, proxy=None):
+    yt = YouTube(link, on_progress_callback=primitive_on_progress, proxies=proxy)
     high_resolution = yt.streams.filter(progressive=True, subtype="mp4").order_by('resolution').desc().first()
 
     filename = "".join([x for x in map(lambda x: "_" if x in punctuation + " " else x, high_resolution.title)]).lower()
